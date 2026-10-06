@@ -1,0 +1,57 @@
+================================================================================
+GUÍA DEL PROYECTO: SISTEMA DE MEDICIÓN EXPERIMENTAL (MRUV - 2DA LEY DE NEWTON)
+Escuela Profesional de Ingeniería de Sistemas - Física
+================================================================================
+
+Este proyecto automatiza la toma de datos de tiempo y aceleración en el riel
+dinámico para eliminar el error de reacción humana del cronómetro manual. 
+Consta de un sistema embebido con Arduino Uno y un script en Python que almacena
+las mediciones directamente en una base de datos local SQLite y un archivo CSV.
+
+--------------------------------------------------------------------------------
+1. COMPONENTES Y MATERIALES
+--------------------------------------------------------------------------------
+Parte Electrónica:
+  - 1x Arduino Uno R3 (con cable USB tipo A-B)
+  - 1x Sensor ultrasónico HC-SR04
+  - 1x Protoboard de 400 puntos
+  - 4x Cables jumper Macho-Hembra (o Macho-Macho según el montaje)
+
+Parte Mecánica y Laboratorio:
+  - Riel dinámico horizontal con polea y carrito (139.74 g)
+  - Juego de masas colgantes (contrapesos)
+  - Tarjeta plana de cartón o plástico (aprox. 8x8 cm) pegada detrás del carrito
+  - Cinta adhesiva o limpiatipo para fijar el sensor al inicio de la pista
+
+--------------------------------------------------------------------------------
+2. DIAGRAMA DE CONEXIONES (ARDUINO UNO <-> SENSOR HC-SR04)
+--------------------------------------------------------------------------------
+  HC-SR04          Arduino Uno
+  --------         -----------
+  VCC      ----->  5V
+  GND      ----->  GND
+  Trig     ----->  Pin Digital 9
+  Echo     ----->  Pin Digital 10
+
+--------------------------------------------------------------------------------
+3. PASO A PASO PARA EJECUTAR EL EXPERIMENTO EN EL LABORATORIO
+--------------------------------------------------------------------------------
+1. Ensamblar las conexiones del sensor al Arduino según el apartado 2.
+2. Pegar la tarjeta reflectora vertical en la parte posterior del carrito.
+3. Fijar el sensor al inicio del riel apuntando perpendicularmente al carrito.
+4. Conectar el Arduino a la laptop con el cable USB.
+5. Abrir `sensor_newton.ino` en Arduino IDE, seleccionar Placa "Arduino Uno", el Puerto COM correspondiente y hacer clic en "Subir".
+6. IMPORTANTE: Una vez subido el código, CERRAR la ventana del Monitor Serie de Arduino IDE (si queda abierto, bloqueará el puerto para Python).
+7. Abrir una terminal en la PC en la carpeta donde está `captura_newton.py`.
+8. Ejecutar el script:
+     python captura_newton.py
+9. El programa pedirá ingresar la masa del contrapeso (ejemplo: 2.370).
+10. Ubicar el carrito en la posición inicial y soltar el contrapeso.
+11. Al cruzar los 70 cm, los valores de tiempo y aceleración se imprimirán en consola y se guardarán solos en el archivo `.csv` y la base de datos `.db`.
+12. Para la siguiente toma (o siguiente peso): presionar el botón físico RESET del Arduino y volver a ejecutar el script de Python.
+
+Posdata: en la Pc o laptop abre el CMD y coloca este comando son 3 opciones 
+
+pip install pyserial
+py -m pip install pyserial      (Recomendado)
+python -m pip install pyserial
